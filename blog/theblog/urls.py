@@ -1,4 +1,4 @@
-from . views import HomeView, View_Post, CreateView, AddPost, UpdatePost
+from . views import HomeView, View_Post, CreateView, AddPost, UpdatePost, DeletePost
 from django.urls import path
 
 urlpatterns = [
@@ -7,4 +7,5 @@ urlpatterns = [
     path('post/<int:pk>', View_Post.as_view(), name='post'),
     path('new_post/', AddPost.as_view(), name='new_post'),
     path('update_post/<int:pk>', UpdatePost.as_view(), name='update_post'),
+    path('delete_post/<int:pk>', DeletePost.as_view(), name='delete_post'),
 ]

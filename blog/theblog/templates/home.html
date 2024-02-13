@@ -7,15 +7,16 @@
         <div class="col-md-12">
             <div class="card border-dark mb-4 me-4 ms-4" style="">
                 {% for post in object_list %}
-                <div class="card mt-2 mb-2 ms-2 me-2 rounded-3">
+                <div class="card mt-2 mb-2 ms-2 me-2 rounded-3 shadow">
                     <div class="card-body">
-                      <h4 class="card-title">{{post.title}}</h4>
-                      <h6 class="card-subtitle mb-2 text-muted">by: <cite title="Source Title">{{post.author}}</cite> </h6>
-                      <p class="card-text">{{post.body}}</p>
-                      <a href="{% url 'post' post.pk %}" class="btn btn-primary card-link">View Post</a>
-                      <a href="#" class="btn btn-info card-link">Reply</a>
+                        <h4 class="card-title">{{post.title}}</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">by: <cite title="Source Title">{{post.author}}</cite></h6>
+                        <p class="card-text">{{post.body}}</p>
+                        <a href="{% url 'post' post.pk %}" class="btn btn-primary card-link rounded-3">View Post</a>
+                        <a href="#" class="btn btn-info card-link rounded-3">Reply</a>
                     </div>
-                  </div>
+                </div>
+                
                 <!-- <figure class="text-center border-dark">
                     <blockquote class="blockquote">
                     <p class="mb-0"><a style="" href="{% url 'post' post.pk %}">{{post.title}}</a></p>
