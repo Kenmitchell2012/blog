@@ -15,7 +15,9 @@ from django.contrib.messages.views import SuccessMessageMixin
 class HomeView(ListView):
     model = Post
     template_name = 'home.html'
-    order_by = '-date_posted'
+    
+    def get_queryset(self):
+        return Post.objects.all().order_by('-created_at')
 
 
 class View_Post(DetailView):
