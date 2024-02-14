@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}{{post.title}} | Future Blogspot{% endblock %}
 {% block body %}
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6 mx-auto">
@@ -8,10 +9,12 @@
                     <div class="card-body">
                         <h4 class="card-title">{{post.title}}</h4>
                         <h6 class="card-subtitle mb-2 text-muted">by: <cite title="Source Title">{{post.author}} - {{ post.created_at }}</cite> </h6>
-                        <p class="card-text">{{post.body}}</p>
-                        <a href="{% url 'update_post' post.pk %}" class="btn btn-primary card-link rounded-3"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a href="#" class="btn btn-info card-link rounded-3"><i class="fa-solid fa-reply"></i></a>
-                        <a href="{% url 'delete_post' post.pk %}" class="btn btn-danger card-link rounded-3"><i class="fa-regular fa-trash-can"></i></a>
+                        <p class="article-content card-text">{{post.body}}</p>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'update_post' post.pk %}" class="btn btn-primary card-link rounded-3"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a href="#" class="btn btn-info card-link rounded-3"><i class="fa-solid fa-reply"></i></a>
+                            <a href="{% url 'delete_post' post.pk %}" class="btn btn-danger card-link rounded-3"><i class="fa-regular fa-trash-can"></i></a>
+                        {% endif %}
 
                     </div>
                 </div>
@@ -20,5 +23,7 @@
             </div>
         </div>
     </div>
+
+
 
 {% endblock %}
