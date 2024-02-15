@@ -11,14 +11,34 @@
                         <h6 class="card-subtitle mb-2 text-muted">by: <cite title="Source Title">{{post.author}} - {{ post.created_at }}</cite> </h6>
                         <p class="article-content card-text">{{post.body}}</p>
                         {% if user.is_authenticated %}
-                            <a href="{% url 'update_post' post.pk %}" class="btn btn-primary card-link rounded-3"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="#" class="btn btn-info card-link rounded-3"><i class="fa-solid fa-reply"></i></a>
-                            <a href="{% url 'delete_post' post.pk %}" class="btn btn-danger card-link rounded-3"><i class="fa-regular fa-trash-can"></i></a>
+                            <a href="{% url 'update_post' post.pk %}" class="btn btn-primary card-link rounded-3">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                                Update Post
+                            </a>
+                            <a href="#" class="btn btn-info card-link rounded-3">
+                                <i class="fa-solid fa-reply"></i>
+                                Reply
+                            </a>
+                            <a href="{% url 'delete_post' post.pk %}" class="btn btn-danger card-link rounded-3">
+                                <i class="fa-regular fa-trash-can"></i>
+                                Delete Post
+                            </a>
                         {% endif %}
 
-                    </div>
+                    </div>    
                 </div>
-        
+                <div class="col-md-6">
+                    <a class="mx-auto ms-4" href="{% url 'home' %}">
+                        <button type="submit" class="btn btn-secondary rounded-3">
+                            <i class="fa-solid fa-chevron-left"></i>
+                            Back Home
+                        </button>
+                    </a>
+
+                </div>
+
+
+
 
             </div>
         </div>
