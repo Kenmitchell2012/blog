@@ -25,6 +25,12 @@
                                     Delete Post
                                 </a>
                             {% endif %}
+                            <form action="{% url 'like_post' post.pk %}" method="post">
+                                {% csrf_token %}
+                                <button name="post_id", value="{{ post.id }}", type="submit", class="btn btn-primary btn-sm rounded-3">Like</button>
+                                {{ total_likes}}
+                            </form>
+
                         {% endif %}
 
                     </div>    
