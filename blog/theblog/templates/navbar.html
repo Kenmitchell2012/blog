@@ -19,6 +19,12 @@
                 Add post
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'add_category' %}">
+                <i class="fa-solid fa-list"></i>
+                Add a Category
+              </a>
+            </li>
             
           
           {% else %}
@@ -36,21 +42,22 @@
             </li>
           {% endif %}
 
+          <!-- categories -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Categories</a>
+            <div class="dropdown-menu">
+              {% for item in cat_menu %}
+                <a class="dropdown-item" href="{% url 'category' item|slugify  %}">{{ item }}</a>
+              {% endfor %}
+              <a class="nav-link" href="{% url 'category_list' %}">Category List</a>
+            </div>
+          </li>
+          <!-- end categories -->
           <li class="nav-item">
             <a class="nav-link" href="#">              
               <i class="fa-lg fa-regular fa-address-card"></i>
               About
             </a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Separated link</a>
-            </div>
           </li>
           {% if user.is_authenticated %}
             <li class="nav-item">

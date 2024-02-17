@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from . models import Post
+from . models import Post, Category
 from .forms import PostForm, EditForm
 
 from django.contrib.messages.views import SuccessMessageMixin
@@ -24,15 +24,37 @@ def LikeView(request, pk):
 
 class HomeView(ListView):
     model = Post
+
     template_name = 'home.html'
+    cats = Category.objects.all()
+
+    def get_context_data(self, *args, **kwargs):
+        cat_menu = Category.objects.all()
+        context = super(HomeView, self).get_context_data(*args, **kwargs)
+        context["cat_menu"] = cat_menu
+        return context
     
     def get_queryset(self):
         return Post.objects.all().order_by('-created_at')
+    
+def CategoryView(request, cats):
+    category_posts = Post.objects.filter(category=cats.replace('-', ' '))
+    return render(request, 'categories.html', {'category_posts': category_posts, 'cats': cats.replace('-', ' ').title()})
+
+def CategoryListView(request, cats):
+    cat_menu_list = Category.objects.all()
+    return render(request, 'categories_list.html', {'cat_menu_list': cat_menu_list})
 
 # fix like function
 class View_Post(DetailView):
     model = Post
     template_name = 'view.html'
+
+    def get_context_data(self, *args, **kwargs):
+        cat_menu = Category.objects.all()
+        context = super(View_Post, self).get_context_data(*args, **kwargs)
+        context["cat_menu"] = cat_menu
+        return context
 
     # def get_context_data(self, *args, **kwargs):
     #     stuff = get_object_or_404(Post, id=self.kwargs['pk'])
@@ -49,6 +71,24 @@ class AddPost(CreateView):
     success_url = reverse_lazy('home')
     # fields = '__all__'
 
+    def get_context_data(self, *args, **kwargs):
+        cat_menu = Category.objects.all()
+        context = super(AddPost, self).get_context_data(*args, **kwargs)
+        context["cat_menu"] = cat_menu
+        return context
+
+class AddCategoryView(CreateView):
+    model = Category
+    #form_class = PostForm
+    template_name = 'add_category.html'
+    fields = '__all__'
+
+    def get_context_data(self, *args, **kwargs):
+        cat_menu = Category.objects.all()
+        context = super(AddCategoryView, self).get_context_data(*args, **kwargs)
+        context["cat_menu"] = cat_menu
+        return context
+
 
 class UpdatePost(UpdateView):
     model = Post
@@ -56,9 +96,21 @@ class UpdatePost(UpdateView):
     template_name = 'update_post.html'
     success_messgae = 'Post updated successfully'
 
+    def get_context_data(self, *args, **kwargs):
+        cat_menu = Category.objects.all()
+        context = super(UpdatePost, self).get_context_data(*args, **kwargs)
+        context["cat_menu"] = cat_menu
+        return context
+
 class DeletePost(DeleteView):
     model = Post
     template_name = 'delete_post.html'
     success_url = reverse_lazy('home')
+
+    def get_context_data(self, *args, **kwargs):
+        cat_menu = Category.objects.all()
+        context = super(DeletePost, self).get_context_data(*args, **kwargs)
+        context["cat_menu"] = cat_menu
+        return context
 
     
