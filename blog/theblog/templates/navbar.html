@@ -66,13 +66,15 @@
                   <button type="submit" class="btn btn-link nav-link custom-red">Logout</button>
               </form>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'edit_profile' %}">              
+              <i class="fa-solid fa-user"></i>
+              Edit Profile
+            </a>
+          </li>
           {% endif %}
 
         </ul>
-        <form class="d-flex">
-          <input class="form-control me-sm-2" type="search" placeholder="Search">
-          <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-        </form>
       </div>
     </div>
   </nav>

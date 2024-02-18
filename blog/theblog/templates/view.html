@@ -25,14 +25,27 @@
                                     Delete Post
                                 </a>
                             {% endif %}
+                        {% endif %}
                             <form action="{% url 'like_post' post.pk %}" method="post">
                                 {% csrf_token %}
-                                <button name="post_id", value="{{ post.id }}", type="submit", class="btn btn-primary btn-sm rounded-3">Like</button>
-                                {{ total_likes}}
-                            </form>
+                                <input type="hidden" name="post_id" value="{{ post.id }}">
+                                {% if user.is_authenticated %}
 
-                        {% endif %}
-
+                                    {% if liked %}
+                                        <button type="submit" class="btn btn-link">
+                                            <i class="fa-lg fas fa-thumbs-down text-danger"></i>
+                                        </button>
+                                    {% else %}
+                                        <button type="submit" class="btn btn-link">
+                                            <i class="fa-lg fas fa-thumbs-up text-primary"></i>
+                                        </button>
+                                    {% endif %}
+                                {% else %}
+                                    <a href="{% url 'login' %}">Login </a>to like |
+                                    
+                                {% endif %}
+                                {{ total_likes }} people like this
+                            </form>            
                     </div>    
                 </div>
                 <div class="col-md-6">
