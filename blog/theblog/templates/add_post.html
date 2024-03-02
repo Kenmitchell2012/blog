@@ -11,7 +11,7 @@
             <div class="card border-dark mb-4 me-4 ms-4 rounded-3" style="">
                 <div class="card-body">
                   <h4 class="card-title"></h4>
-                    <form method="post">
+                    <form method="post" enctype="multipart/form-data">
                       {% csrf_token %}
                       {{ form.media }}
                       {{ form.as_p }}
