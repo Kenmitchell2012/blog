@@ -5,7 +5,7 @@
     <h1 class="text-center">Latest Blog Posts</h1>
     <div class="row">
         <div class="col-md-7 mx-auto">
-            <div class="card border-dark mb-4 me-4 ms-4" style="">
+            <div class="card mb-4 me-4 ms-4" style="">
                 {% for post in object_list %}
                 <div class="card mt-2 mb-2 ms-2 me-2 rounded-3 shadow">
                     <div class="card-body">
@@ -16,7 +16,11 @@
                            </a>                         
                         </div>
                         <h6 class="card-subtitle mb-2 text-muted">by: <cite title="Source Title">{{post.author}} - {{ post.created_at }}</cite></h6>
-                        <p class="card-text">{{ post.body|truncatechars:100 }}</p>
+                        {% if post.header_image %}
+                            <img class="img-fluid mb-2 mt-2 mb-2 ms-2 me-2 rounded-3 shadow" src="{{ post.header_image.url }}" alt="">
+                        {% endif %}
+
+                        <p class="card-text">{{ post.body|truncatechars:100|safe }}</p>
                         <a href="{% url 'post' post.pk %}" class="btn btn-primary card-link rounded-3">
                             <i class="fa-regular fa-eye"></i>
                             View
@@ -56,10 +60,5 @@
         </div>
     </div>
 </div>
-
-
-{% for item in cat_menu %}
-    {{ item }}
-{% endfor %}
 
 {% endblock %}
