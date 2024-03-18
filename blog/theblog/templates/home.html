@@ -2,7 +2,7 @@
 {% block title %}Blog Posts | Future Blogspot{% endblock %}
 {% block body %}
 <div class="container-fluid">
-    <h1 class="text-center">Latest Blog Posts</h1>
+    <h1 class="text-center">Latest Posts</h1>
     <div class="row">
         <div class="col-md-7 mx-auto">
             <div class="card mb-4 me-4 ms-4" style="">
@@ -40,7 +40,7 @@
                                     <i class="fa-solid fa-pen-to-square"></i>
                                     Update
                                 </a>
-                                <a href="{% url 'delete_post' post.pk %}" class="btn btn-danger card-link rounded-3 w-100">
+                                <a href="{% url 'delete_post' post.pk %}" class="btn mb-2 btn-danger card-link rounded-3 w-100">
                                     <i class="fa-regular fa-trash-can"></i>
                                     Delete
                                 </a>

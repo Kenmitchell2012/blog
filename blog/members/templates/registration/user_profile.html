@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}{{post.title}} | Future Blogspot{% endblock %}
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="card border-dark mt-4 mb-4 me-4 ms-4 shadow rounded-3" style="">
+                    <div class="card-body">
+                        <h4 class="card-title">{{post.title}}</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">by: <cite title="Source Title">{{post.author}} - {{ post.created_at }}</cite> </h6>
+
+                        <!-- Add Bootstrap classes to the image for alignment -->
+
+                        {% if post.header_image %}
+                            <img class="img-fluid mb-2" src="{{ post.header_image.url }}" alt="">
+                        {% endif %}
+                        <p class="article-content card-text">{{post.body|safe}}</p>
+                        {% if user.is_authenticated %}
+                            {% if user.id == post.author.id %}
+                                <a href="{% url 'update_post' post.pk %}" class="btn btn-primary card-link rounded-3">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                    Update
+                                </a>
+                                <a href="#" class="btn btn-info card-link rounded-3">
+                                    <i class="fa-solid fa-reply"></i>
+                                    Reply
+                                </a>
+                                <a href="{% url 'delete_post' post.pk %}" class="btn btn-danger card-link rounded-3">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                    Delete Post
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                            <form action="{% url 'like_post' post.pk %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="post_id" value="{{ post.id }}">
+                                {% if user.is_authenticated %}
+
+                                    {% if liked %}
+                                        <button type="submit" class="btn btn-link">
+                                            <i class="fa-lg fas fa-thumbs-down text-danger"></i>
+                                        </button>
+                                        
+                                    {% else %}
+                                        <button type="submit" class="btn btn-link">
+                                            <i class="fa-lg fas fa-thumbs-up text-primary"></i>
+                                        </button>
+                                    {% endif %}
+                                {% else %}
+                                    <a href="{% url 'login' %}">Login </a>to like |
+                                    
+                                {% endif %}
+                                {{ total_likes }} people like this
+                            </form>            
+                    </div>    
+                </div>
+                
+
+
+
+
+            </div>
+            <div class="col-md-4 mt-4 mx-auto">
+                <div class="card rounded-3 shadow-sm">
+                    <img src="{{ post.author.profile.profile_pic.url }}" max-height="300" class="card-img-top" alt="Profile Picture">
+                    <div class="card-body">
+                        <h5 class="card-title">Posted By: {{ post.author.username }}</h5>
+                        <p class="card-text text-muted">{{post.author.profile.bio}}</p>
+                        <a href="#" class="btn rounded-3 btn-primary">Go to Profile</a>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="col-2">
+            <a class="mx-auto ms-4" href="{% url 'home' %}">
+                <button type="submit" class="btn btn-secondary rounded-3">
+                    <i class="fa-solid fa-chevron-left"></i>
+                    Back Home
+                </button>
+            </a>
+
+        </div>
+    </div>
+
+
+
+{% endblock %}
