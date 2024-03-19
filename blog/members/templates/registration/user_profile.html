@@ -1,69 +1,27 @@
 {% extends 'base.html' %}
 {% block title %}{{post.title}} | Future Blogspot{% endblock %}
 {% block body %}
+{% load static %}
+
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8 mx-auto">
-                <div class="card border-dark mt-4 mb-4 me-4 ms-4 shadow rounded-3" style="">
-                    <div class="card-body">
-                        <h4 class="card-title">{{post.title}}</h4>
-                        <h6 class="card-subtitle mb-2 text-muted">by: <cite title="Source Title">{{post.author}} - {{ post.created_at }}</cite> </h6>
 
-                        <!-- Add Bootstrap classes to the image for alignment -->
+            <div class="col-md-4 mx-auto">
 
-                        {% if post.header_image %}
-                            <img class="img-fluid mb-2" src="{{ post.header_image.url }}" alt="">
-                        {% endif %}
-                        <p class="article-content card-text">{{post.body|safe}}</p>
-                        {% if user.is_authenticated %}
-                            {% if user.id == post.author.id %}
-                                <a href="{% url 'update_post' post.pk %}" class="btn btn-primary card-link rounded-3">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                    Update
-                                </a>
-                                <a href="#" class="btn btn-info card-link rounded-3">
-                                    <i class="fa-solid fa-reply"></i>
-                                    Reply
-                                </a>
-                                <a href="{% url 'delete_post' post.pk %}" class="btn btn-danger card-link rounded-3">
-                                    <i class="fa-regular fa-trash-can"></i>
-                                    Delete Post
-                                </a>
-                            {% endif %}
-                        {% endif %}
-                            <form action="{% url 'like_post' post.pk %}" method="post">
-                                {% csrf_token %}
-                                <input type="hidden" name="post_id" value="{{ post.id }}">
-                                {% if user.is_authenticated %}
-
-                                    {% if liked %}
-                                        <button type="submit" class="btn btn-link">
-                                            <i class="fa-lg fas fa-thumbs-down text-danger"></i>
-                                        </button>
-                                        
-                                    {% else %}
-                                        <button type="submit" class="btn btn-link">
-                                            <i class="fa-lg fas fa-thumbs-up text-primary"></i>
-                                        </button>
-                                    {% endif %}
-                                {% else %}
-                                    <a href="{% url 'login' %}">Login </a>to like |
-                                    
-                                {% endif %}
-                                {{ total_likes }} people like this
-                            </form>            
-                    </div>    
+                <div class="col-md-4 mt-4 mx-auto">
+                    <div class="card rounded-3 shadow-sm">
+                        <img src="{{ page_user.profile_pic.url }}" max-height="300" class="card-img-top" alt="Profile Picture">
+                        <div class="card-body">
+                            <h5 class="card-title">Posted By: {{ page_user.user.username }}</h5>
+                            <p class="card-text text-muted">{{page_user.user.profile.bio}}</p>
+                        </div>
+                    </div>
                 </div>
-                
-
-
-
-
             </div>
-            <div class="col-md-4 mt-4 mx-auto">
+            <div class="col-md-8 mt-4 mx-auto">
                 <div class="card rounded-3 shadow-sm">
-                    <img src="{{ post.author.profile.profile_pic.url }}" max-height="300" class="card-img-top" alt="Profile Picture">
+                    All Posts
                     <div class="card-body">
                         <h5 class="card-title">Posted By: {{ post.author.username }}</h5>
                         <p class="card-text text-muted">{{post.author.profile.bio}}</p>
@@ -84,7 +42,6 @@
 
         </div>
     </div>
-
 
 
 {% endblock %}

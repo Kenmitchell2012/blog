@@ -67,7 +67,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Posted By: {{ post.author.username }}</h5>
                         <p class="card-text text-muted">{{post.author.profile.bio}}</p>
-                        <a href="#" class="btn rounded-3 btn-primary">Go to Profile</a>
+                        <a href="{% url 'show_profile_page' post.author.profile.id %}" class="btn rounded-3 btn-primary">Go to Profile</a>
                     </div>
                 </div>
             </div>
