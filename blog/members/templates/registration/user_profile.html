@@ -1,37 +1,57 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}{{post.title}} | Future Blogspot{% endblock %}
 {% block body %}
-{% load static %}
+
 
 
     <div class="container-fluid">
         <div class="row">
 
             <div class="col-md-4 mx-auto">
+                <div class="card rounded-3 shadow-sm">
+                    <img src="{{ profile.profile_pic.url }}" max-height="300" class="card-img-top rounded-3" alt="Profile Picture">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ profile.user.username }}</h5>
 
-                <div class="col-md-4 mt-4 mx-auto">
-                    <div class="card rounded-3 shadow-sm">
-                        <img src="{{ page_user.profile_pic.url }}" max-height="300" class="card-img-top" alt="Profile Picture">
-                        <div class="card-body">
-                            <h5 class="card-title">Posted By: {{ page_user.user.username }}</h5>
-                            <p class="card-text text-muted">{{page_user.user.profile.bio}}</p>
-                        </div>
+                        <p class="card-text text-muted">Bio: {{profile.user.profile.bio}}</p>
                     </div>
                 </div>
             </div>
             <div class="col-md-8 mt-4 mx-auto">
-                <div class="card rounded-3 shadow-sm">
-                    All Posts
-                    <div class="card-body">
-                        <h5 class="card-title">Posted By: {{ post.author.username }}</h5>
+                <div class="d-flex justify-content-between">
+                    <h3 class="mb-2 ms-2 me-2">All Posts</h3>
+                    <a href="" class="mb-2 ms-2 me-2 btn btn-info card-link rounded-3">
+                        <i class="fa-regular fa-eye"></i>
+                        Edit Profile
+                    </a>
+
+                </div>
+                        <!-- <h5 class="card-title">Posted By: {{ post.author.username }}</h5>
                         <p class="card-text text-muted">{{post.author.profile.bio}}</p>
-                        <a href="#" class="btn rounded-3 btn-primary">Go to Profile</a>
+                        <a href="#" class="btn rounded-3 btn-primary">Go to Profile</a> -->
+
+                        <!-- show all posts from user -->
+                {% for post in posts %}        
+                <div class="card mt-2 mb-2 ms-2 me-2 rounded-3 shadow">
+                    
+                    <div class="card-body">
+                        <div class="justify-content-between d-flex">
+                            <h4 class="card-title">{{post.title}}</h4>
+                            <button type="button" class="btn rounded-3 btn-sm btn-outline-secondary">{{post.category}}</button>                        
+                        </div>
+                        <h6 class="card-subtitle mb-2 text-muted">by: <cite title="Source Title">{{post.author}} - {{ post.created_at }}</cite></h6>
+                        <p class="card-text">{{ post.body|truncatechars:100 }}</p>
+                        <a href="{% url 'post' post.pk %}" class="btn btn-primary card-link rounded-3">
+                            <i class="fa-regular fa-eye"></i>
+                            View Post
+                        </a>
                     </div>
                 </div>
+                {% endfor %}
+
             </div>
             
-            
-        </div>
         <div class="col-2">
             <a class="mx-auto ms-4" href="{% url 'home' %}">
                 <button type="submit" class="btn btn-secondary rounded-3">
@@ -42,6 +62,7 @@
 
         </div>
     </div>
+</div>
 
 
 {% endblock %}
