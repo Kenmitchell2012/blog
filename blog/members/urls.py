@@ -1,5 +1,5 @@
 from django.contrib.auth.views import LogoutView
-from . views import UserRegisterView, UserEditView, PasswordsChangeView, ShowProfilePageView
+from . views import UserRegisterView, UserEditView, PasswordsChangeView, ShowProfilePageView, EditProfilePageView
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
@@ -15,4 +15,6 @@ urlpatterns = [
     path('password_success/', views.password_success, name='password_success'),
     # profile page
     path('<int:pk>/', ShowProfilePageView.as_view(), name='show_profile_page'),
+    path('<int:pk>/profile_page', EditProfilePageView.as_view(), name='edit_profile_page'),
+
 ]

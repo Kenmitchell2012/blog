@@ -1,3 +1,31 @@
 .custom-red {
     color: red;
 }
+
+.profile-picture {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.post h4.card-title {
+    flex-grow: 1;
+}
+
+@media (max-width: 768px) {
+    .post .profile-pic {
+        width: 30px; /* Adjust the size for smaller screens */
+        height: 30px; /* Adjust the size for smaller screens */
+    }
+}
+
+
+#profile-pic {
+    width: 40px; /* Adjust the size for smaller screens */
+    height: 40px; /* Adjust the size for smaller screens */
+}
+
+.btn {
+    padding: 0.375rem 0.75rem;
+}

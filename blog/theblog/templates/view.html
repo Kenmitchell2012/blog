@@ -12,9 +12,7 @@
 
                         <!-- Add Bootstrap classes to the image for alignment -->
 
-                        {% if post.header_image %}
-                            <img class="img-fluid mb-2" src="{{ post.header_image.url }}" alt="">
-                        {% endif %}
+                        <img style="object-fit: cover; width: 100%; max-height: 500px;" class="img-fluid mb-2" src="{{ post.header_image.url }}" alt="">
                         <p class="article-content card-text">{{post.body|safe}}</p>
                         {% if user.is_authenticated %}
                             {% if user.id == post.author.id %}
@@ -63,7 +61,22 @@
             </div>
             <div class="col-md-4 mt-4 mx-auto">
                 <div class="card rounded-3 shadow-sm">
-                    <img src="{{ post.author.profile.profile_pic.url }}" max-height="300" class="card-img-top" alt="Profile Picture">
+                    {% for post in posts %}
+                    <div class="post">
+                        <div class="profile-image">
+                            {% if post.author.profile_pic %}
+                                <img src="{{ post.author.profile_pic.url }}" alt="{{ post.author.username }}">
+                            {% else %}
+                                <img src="" alt="Default Profile Image">
+                            {% endif %}
+                        </div>
+                        <div class="post-content">
+                            <!-- Display post content here -->
+                        </div>
+                    </div>
+                {% endfor %}
+
+                    <img style="object-fit: cover; width: 100%; max-height: 500px;" src="{{ post.author.profile.profile_pic.url }}" max-height="100" class="card-img-top rounded-circle" alt="Profile Picture">
                     <div class="card-body">
                         <h5 class="card-title">Posted By: {{ post.author.username }}</h5>
                         <p class="card-text text-muted">{{post.author.profile.bio}}</p>

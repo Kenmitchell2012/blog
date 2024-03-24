@@ -20,8 +20,8 @@
             </div>
             <div class="col-md-8 mt-4 mx-auto">
                 <div class="d-flex justify-content-between">
-                    <h3 class="mb-2 ms-2 me-2">All Posts</h3>
-                    <a href="" class="mb-2 ms-2 me-2 btn btn-info card-link rounded-3">
+                    <h3 class="mb-2 ms-2 me-2">All Posts by {{ page_user.username  }}</h3>
+                    <a href="" class="mb-2 ms-2 me-2 btn btn-outline-primary card-link rounded-3">
                         <i class="fa-regular fa-eye"></i>
                         Edit Profile
                     </a>
@@ -52,17 +52,20 @@
 
             </div>
             
-        <div class="col-2">
-            <a class="mx-auto ms-4" href="{% url 'home' %}">
-                <button type="submit" class="btn btn-secondary rounded-3">
-                    <i class="fa-solid fa-chevron-left"></i>
-                    Back Home
-                </button>
-            </a>
-
-        </div>
+        
     </div>
+    <div class="">
+        <a class="mx-auto mt-4" href="{% url 'home' %}">
+            <button type="submit" class="btn btn-outline-dark rounded-3">
+                <i class="fa-solid fa-chevron-left"></i>
+                Back Home
+            </button>
+        </a>
+
 </div>
+    
+</div>
+
 
 
 {% endblock %}

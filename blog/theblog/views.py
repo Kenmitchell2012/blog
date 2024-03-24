@@ -28,19 +28,48 @@ def LikeView(request, pk):
 
 
 
+# class HomeView(ListView):
+#     model = Post
+
+#     template_name = 'home.html'
+#     cats = Category.objects.all()
+
+#     def get_context_data(self, *args, **kwargs):
+#         cat_menu = Category.objects.all()
+#         context = super(HomeView, self).get_context_data(*args, **kwargs)
+
+#         context["cat_menu"] = cat_menu
+#         return context
+    
+#     def get_queryset(self):
+#         return Post.objects.all().order_by('-created_at')
+
 class HomeView(ListView):
     model = Post
-
     template_name = 'home.html'
-    cats = Category.objects.all()
 
     def get_context_data(self, *args, **kwargs):
-        cat_menu = Category.objects.all()
         context = super(HomeView, self).get_context_data(*args, **kwargs)
+        context["cat_menu"] = Category.objects.all()
 
-        context["cat_menu"] = cat_menu
+        # Adding profile pictures to the context
+        profile_pics = {}
+        for post in context['post_list']:
+            try:
+                profile_pics[post.author.id] = post.author.profile_pic.url
+            except AttributeError:
+                # Profile does not exist for this user
+                profile_pics[post.author.id] = None
+        context["profile_pics"] = profile_pics
+
         return context
-    
+
+    def get_queryset(self):
+        return Post.objects.all().order_by('-created_at')
+
+    def get_queryset(self):
+        return Post.objects.all().order_by('-created_at')
+
     def get_queryset(self):
         return Post.objects.all().order_by('-created_at')
     

@@ -51,6 +51,12 @@ class ShowProfilePageView(DetailView):
         # Pass the user's posts to the context
         context["posts"] = posts
         return context
+    
+class EditProfilePageView(generic.UpdateView):
+    model = Profile
+    template_name = 'registration/edit_profile_page.html'
+    fields = ['bio', 'profile_pic','website_url', 'facebook_url', 'twitter_url', 'instagram_url', 'pinterest_url']
+    success_url = reverse_lazy('home')
 
 
 
