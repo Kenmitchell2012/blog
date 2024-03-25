@@ -1,12 +1,14 @@
 from django.db.models.base import Model as Model
 from django.db.models.query import QuerySet
+from django.forms import BaseModelForm
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth.views import PasswordChangeView
 from django.urls import reverse_lazy
-from . forms import SignUpForm, EditProfileForm, PasswordChangingForm
-from django.views.generic import DetailView
+from . forms import SignUpForm, EditProfileForm, PasswordChangingForm, ProfilePageForm
+from django.views.generic import DetailView, CreateView
 from theblog.models import Profile, Post
 
 # Create your views here.
@@ -51,6 +53,16 @@ class ShowProfilePageView(DetailView):
         # Pass the user's posts to the context
         context["posts"] = posts
         return context
+    
+
+class CreateProfilePageView(generic.CreateView):
+    model = Profile
+    form_class = ProfilePageForm
+    template_name = 'registration/create_profile_page.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
     
 class EditProfilePageView(generic.UpdateView):
     model = Profile

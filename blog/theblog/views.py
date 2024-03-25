@@ -44,12 +44,16 @@ def LikeView(request, pk):
 #     def get_queryset(self):
 #         return Post.objects.all().order_by('-created_at')
 
+from django.views.generic import ListView
+from .models import Post, Category
+
 class HomeView(ListView):
     model = Post
     template_name = 'home.html'
+    context_object_name = 'post_list'
 
-    def get_context_data(self, *args, **kwargs):
-        context = super(HomeView, self).get_context_data(*args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         context["cat_menu"] = Category.objects.all()
 
         # Adding profile pictures to the context
@@ -67,11 +71,6 @@ class HomeView(ListView):
     def get_queryset(self):
         return Post.objects.all().order_by('-created_at')
 
-    def get_queryset(self):
-        return Post.objects.all().order_by('-created_at')
-
-    def get_queryset(self):
-        return Post.objects.all().order_by('-created_at')
     
 def CategoryView(request, cats):
     category_posts = Post.objects.filter(category=cats.replace('-', ' '))

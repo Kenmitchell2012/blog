@@ -64,14 +64,22 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Profile</a>
             <div class="dropdown-menu">
+              {% if user.profile.id %}
               <a class="nav-link" href="{% url 'show_profile_page' user.profile.id %}">              
                 <i class="fa-solid fa-user"></i>
                 Show Profile
               </a>
-              <a class="nav-link" href="{% url 'edit_profile_page' user.profile.id %}">              
+                <a class="nav-link" href="{% url 'edit_profile_page' user.profile.id %}">              
+                  <i class="fa-solid fa-user"></i>
+                  Edit Profile
+                </a>
+              {% else %}
+              <a class="nav-link" href="{% url 'create_profile_page'  %}">              
                 <i class="fa-solid fa-user"></i>
-                Edit Profile
-              </a>
+                Create Profile Page
+              </a> 
+
+              {% endif %}
               <a class="nav-link" href="{% url 'edit_profile' %}">              
                 <i class="fa-solid fa-user"></i>
                 Edit Settings

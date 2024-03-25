@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Create a New Profile Page | Future Blogspot{% endblock %}
+{% block body %}
+
+
+{% if user.is_authenticated %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card border-dark mt-4 mb-4 me-4 ms-4 rounded-3" style="">
+                <div class="card-body">
+                  <h4 class="card-title">Create a Profile Page</h4>
+                    <form method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      {{ form.as_p }}
+                      
+                      <button type="submit" class="btn btn-primary rounded-3">Submit</button>
+                    </form>
+                </div>
+              </div>
+            
+        </div>
+    </div>
+</div>
+
+{% else %}
+
+<div class="alert alert-dismissible alert-danger">
+  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  <strong>Oh snap!</strong> <a href="{% url 'login' %}" class="alert-link">Sign in to add a Post</a>
+</div>
+
+
+{% endif %}
+
+    
+
+{% endblock %}
