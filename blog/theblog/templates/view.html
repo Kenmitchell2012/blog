@@ -11,8 +11,9 @@
                         <h6 class="card-subtitle mb-2 text-muted">by: <cite title="Source Title">{{post.author}} - {{ post.created_at }}</cite> </h6>
 
                         <!-- Add Bootstrap classes to the image for alignment -->
-
-                        <img style="object-fit: cover; width: 100%; max-height: 500px;" class="img-fluid mb-2" src="{{ post.header_image.url }}" alt="">
+                        {% if post.header_image %}
+                            <img style="object-fit: cover; width: 100%; max-height: 100%" class="img-fluid mb-2" src="{{ post.header_image.url }}" alt="">
+                        {% endif %}
                         <p class="article-content card-text">{{post.body|safe}}</p>
                         {% if user.is_authenticated %}
                             {% if user.id == post.author.id %}

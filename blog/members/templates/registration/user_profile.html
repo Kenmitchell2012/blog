@@ -32,23 +32,29 @@
                         <a href="#" class="btn rounded-3 btn-primary">Go to Profile</a> -->
 
                         <!-- show all posts from user -->
-                {% for post in posts %}        
-                <div class="card mt-2 mb-2 ms-2 me-2 rounded-3 shadow">
-                    
-                    <div class="card-body">
-                        <div class="justify-content-between d-flex">
-                            <h4 class="card-title">{{post.title}}</h4>
-                            <button type="button" class="btn rounded-3 btn-sm btn-outline-secondary">{{post.category}}</button>                        
+                {% if posts %}
+                    {% for post in posts %}        
+                    <div class="card mt-2 mb-2 ms-2 me-2 rounded-3 shadow">
+                        
+                        <div class="card-body">
+                            <div class="justify-content-between d-flex">
+                                <h4 class="card-title">{{post.title}}</h4>
+                                <button type="button" class="btn rounded-3 btn-sm btn-outline-secondary">{{post.category}}</button>                        
+                            </div>
+                            <h6 class="card-subtitle mb-2 text-muted">by: <cite title="Source Title">{{post.author}} - {{ post.created_at }}</cite></h6>
+                            <p class="card-text">{{ post.body|truncatechars:100 }}</p>
+                            <a href="{% url 'post' post.pk %}" class="btn btn-primary card-link rounded-3">
+                                <i class="fa-regular fa-eye"></i>
+                                View Post
+                            </a>
                         </div>
-                        <h6 class="card-subtitle mb-2 text-muted">by: <cite title="Source Title">{{post.author}} - {{ post.created_at }}</cite></h6>
-                        <p class="card-text">{{ post.body|truncatechars:100 }}</p>
-                        <a href="{% url 'post' post.pk %}" class="btn btn-primary card-link rounded-3">
-                            <i class="fa-regular fa-eye"></i>
-                            View Post
-                        </a>
                     </div>
-                </div>
-                {% endfor %}
+                    {% endfor %}
+                    {% else %}
+                    <div class="card mt-2 mb-2 ms-2 me-2 rounded-3 shadow">
+                        No posts to show yet!
+                    </div>
+                    {% endif %}
 
             </div>
             
