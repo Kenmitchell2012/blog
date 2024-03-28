@@ -32,7 +32,7 @@ class Profile(models.Model):
         return str(self.user)
     
     def get_absolute_url(self):
-        return reverse('home', args=(str(self.user.id)) )
+        return reverse('home')
 
 
 class Post(models.Model):
