@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}{{post.title}} | Future Blogspot{% endblock %}
 {% block body %}
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8 mx-auto">
@@ -54,6 +54,50 @@
                             </form>            
                     </div>    
                 </div>
+                <!-- comment section -->
+                <div class="card mt-2 mb-4 me-4 ms-4 shadow rounded-3">
+                    <div class="card-body">
+                        <h4 class="card-title">Comments</h4>
+                        {% if not post.comments.all %}
+                            <p class="card-text">No comments yet! You can be the first....</p>
+                            <!-- add comment -->
+                            <form action="#" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="post_id" value="{{ post.id }}">
+                                <div class="form-group">
+                                    <textarea class="form-control" name="comment" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add Comment</button>
+                            </form>
+                        {% else %}
+                            {% for comment in post.comments.all %}
+                            <div class="card mt-2 mb-2 ms-2 me-2 rounded-3 shadow">
+                                <div class="card-body">
+                                    <div class="justify-content-between d-flex">
+                                        <h4 class="card-title">{{comment.name}}</h4>
+                                        <button type="button" class="btn rounded-3 btn-sm btn-outline-secondary">{{comment.author}}</button>                        
+                                    </div>
+                                    <h6 class="card-subtitle mb-2 text-muted">by: <cite title="Source Title">{{comment.post.author.user.user.first_name}} - {{ comment.date_added }}</cite></h6>
+                                    <p class="card-text">{{ comment.body }}</p>
+                                    <!-- <a href="#" class="btn btn-primary card-link rounded-3">
+                                        <i class="fa-regular fa-eye"></i>
+                                        View Comment
+                                    </a> -->
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <a href="#" id="addCommentButton" class="btn me-2 mt-2 btn-primary card-link rounded-3">
+                                <i class="fa-regular fa-plus"></i>
+                                Add Comment
+                            </a>
+                            <!-- Textbox for adding comment -->
+                            <div id="commentBox" class="comment-box">
+                                <textarea class="form-control" id="commentTextarea" rows="4" cols="50"></textarea>
+                                <a href="{% url 'add_comment' post.pk %}"><button type="button" class="rounded-3 btn btn-primary mt-2" id="submitCommentButton">Submit</button></a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
                 
 
 
@@ -99,6 +143,21 @@
         </div>
     </div>
 
+    <script>
+        // JavaScript to toggle the visibility of the comment box
+        document.getElementById("addCommentButton").addEventListener("click", function() {
+            // Prevent the default behavior of the anchor element
+            event.preventDefault();
+
+            var commentBox = document.getElementById("commentBox");
+            // Toggle visibility of the comment box
+            if (commentBox.style.display === "none") {
+                commentBox.style.display = "block";
+            } else {
+                commentBox.style.display = "none";
+            }
+        });
+    </script>
 
 
 {% endblock %}

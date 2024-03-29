@@ -1,0 +1,5 @@
+
+/* CSS for hiding/showing the textbox */
+.comment-box {
+    display: none; /* Hide the textbox initially */
+}

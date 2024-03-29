@@ -10,7 +10,7 @@
 
             <div class="col-md-4 mx-auto">
                 <div class="card mt-4 rounded-3 shadow-sm">
-                    {% if profile_pic %}
+                    {% if profile.profile_pic %}
                     <img src="{{ profile.profile_pic.url }}" max-height="300" class="card-img-top rounded-3" alt="Profile Picture">
                     {% else %}
                     <img src="{% static 'theblog/images/blank_profile_pic.jpg' %}" max-height="300" class="card-img-top rounded-3" alt="Profile Picture">

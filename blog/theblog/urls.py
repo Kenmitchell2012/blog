@@ -1,4 +1,4 @@
-from . views import HomeView, View_Post, CreateView, AddPost, UpdatePost, DeletePost, LikeView, AddCategoryView, CategoryView, CategoryListView
+from . views import HomeView, View_Post, CreateView, AddPost, UpdatePost, DeletePost, LikeView, AddCategoryView, CategoryView, CategoryListView, AddCommentView
 from django.urls import include, path
 
 urlpatterns = [
@@ -14,7 +14,15 @@ urlpatterns = [
 
     path('category/<str:cats>', CategoryView, name='category'),
     path('category_list/', CategoryListView, name='category_list'),
-    path('<int:uid>/', include('members.urls'))
+    path('<int:uid>/', include('members.urls')),
+    # path for comments
+    path('post/<int:pk>/comment', AddCommentView.as_view(), name='add_comment'),
+    # path('comment_list/<int:pk>', CommentListView.as_view(), name='comment_list'),
+    # path('create_comment/<int:pk>', CreateCommentView.as_view(), name='create_comment'),
+    # path('edit_comment/<int:pk>', EditCommentView.as_view(), name='edit_comment'),
+    # path('delete_comment/<int:pk>', DeleteCommentView.as_view(), name='delete_comment'),
+    # path('like_comment/<int:pk>', LikeCommentView.as_view(), name='like_comment'),
+    # path('unlike_comment/<int:pk>', UnlikeCommentView.as_view(), name='unlike_comment'),
 
 
 ]

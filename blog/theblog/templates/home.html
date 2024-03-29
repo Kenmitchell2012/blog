@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Blog Posts | Future Blogspot{% endblock %}
 
@@ -13,7 +14,7 @@
                     <div class="card-body">
                         <div class="justify-content-between d-flex">
                             <div class="d-flex post">
-                                <img src="{{ post.author.profile.profile_pic.url }}" id="profile_pic" style="width: 50px; height: 50px;" class="rounded-circle profile-picture profile_pic mb-2 mx-auto" alt="Profile Picture">
+                                <img src="{{ post.author.profile.profile_pic.url }}" id="profile-picture" style="width: 50px; height: 50px;" class="rounded-circle profile-picture profile_pic mb-2 mx-auto" alt="Profile Picture">
                                 <a class="text-muted" href="#" style="text-decoration: none;">
                                     <h4 class="ms-2 mt-3 card-title">{{ post.author.username }}</h4>
                                 </a>
