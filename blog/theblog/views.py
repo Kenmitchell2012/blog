@@ -1,9 +1,10 @@
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from . models import Post, Category, Comment
 from .forms import PostForm, EditForm
+from django.contrib import messages
 
 from django.contrib.messages.views import SuccessMessageMixin
 
@@ -123,6 +124,9 @@ class AddCommentView(CreateView):
 
     success_url = reverse_lazy('home')
     fields = 'body'
+
+
+
 
 
 class AddCategoryView(CreateView):
