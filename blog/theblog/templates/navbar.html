@@ -95,7 +95,14 @@
                   Logout
                 </button>
             </form>
-        </li>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link d-none d-md-block" href="#">              
+              <i class="fa-solid fa-user"></i>
+              Hi, {{ user.username }}
+            </a>
+          </li>
+        
           {% endif %}
 
         </ul>

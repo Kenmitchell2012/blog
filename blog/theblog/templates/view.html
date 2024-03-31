@@ -106,17 +106,24 @@
                             {% if post.author.profile_pic %}
                                 <img src="{{ post.author.profile_pic.url }}" alt="{{ post.author.username }}">
                             {% else %}
-                                <img src="" alt="Default Profile Image">
+                                <img src="{% static 'theblog/images/blank_profile_pic.jpg' %}" id="profile-picture" style="width: 50px; height: 50px;" class="rounded-circle profile-picture profile_pic mb-2 mx-auto" alt="Profile Picture">
                             {% endif %}
                         </div>
                     </div>
                 {% endfor %}
-
                     <img style="object-fit: cover; width: 100%; max-height: 500px;" src="{{ post.author.profile.profile_pic.url }}" max-height="100" class="card-img-top" alt="Profile Picture">
                     <div class="card-body">
                         <h5 class="card-title">{{ post.author.username }}</h5>
                         <p class="card-text text-muted">{{post.author.profile.bio}}</p>
-                        <a href="{% url 'show_profile_page' post.author.profile.id %}" class="btn rounded-3 btn-primary">Go to Profile</a>
+                        {% if post.author.profile %}
+                            <a href="{% url 'show_profile_page' post.author.profile.id %}" class="btn rounded-3 btn-primary">Go to Profile</a>
+                        {% else %}
+                            {% if user.id == post.author.id %}
+                                <a href="{% url 'create_profile_page' post.author.id %}" class="btn rounded-3 btn-primary">Create Profile</a>
+                            {% else %}
+                                <p>{{ post.author.username }}'s profile page isn't set up yet.</p>
+                            {% endif %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
