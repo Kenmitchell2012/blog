@@ -13,8 +13,9 @@
                         <!-- Add Bootstrap classes to the image for alignment -->
                         {% if post.header_image %}
                             <img style="object-fit: cover; width: 100%; max-height: 100%" class="img-fluid mb-2" src="{{ post.header_image.url }}" alt="">
+
                         {% endif %}
-                        <p class="article-content card-text">{{post.body|safe}}</p>
+                        <p class="card-text" style="font-size: 1.2rem;">{{post.body|striptags}}</p>
                         {% if user.is_authenticated %}
                             {% if user.id == post.author.id %}
                                 <a href="{% url 'update_post' post.pk %}" class="btn btn-primary card-link rounded-3">
@@ -58,7 +59,7 @@
                <!-- Comment section -->
                 <div class="card mt-2 mb-4 me-4 ms-4 shadow rounded-3">
                     <div class="card-body">
-                        <h4 class="me-2 card-title">Comments</h4>
+                        <h4 class="me-2 card-title">Comments({{ post.comments.count }})</h4>
                         {% if not post.comments.all %}
                             <p class="card-text">No comments yet! You can be the first....</p>
                         {% else %}
@@ -70,7 +71,7 @@
                                             <button type="button" class="btn rounded-3 btn-sm btn-outline-secondary">{{comment.author}}</button>                        
                                         </div>
                                         <h6 class="card-subtitle mb-2 text-muted">by: <cite title="Source Title">{{comment.post.author.user.user.first_name}} - {{ comment.date_added }}</cite></h6>
-                                        <p class="card-text">{{ comment.body }}</p>
+                                        <p class="card-text" style="font-size: 1.2rem;">{{ comment.body }}</p>
                                     </div>
                                 </div>
                             {% endfor %}
@@ -104,14 +105,19 @@
                     <div class="post">
                         <div class="me-2 rounded ms-2">
                             {% if post.author.profile_pic %}
-                                <img src="{{ post.author.profile_pic.url }}" alt="{{ post.author.username }}">
+                                <img class="rounded-2" src="{{ post.author.profile_pic.url }}" alt="profile pic">
                             {% else %}
                                 <img src="{% static 'theblog/images/blank_profile_pic.jpg' %}" id="profile-picture" style="width: 50px; height: 50px;" class="rounded-circle profile-picture profile_pic mb-2 mx-auto" alt="Profile Picture">
                             {% endif %}
                         </div>
                     </div>
                 {% endfor %}
-                    <img style="object-fit: cover; width: 100%; max-height: 500px;" src="{{ post.author.profile.profile_pic.url }}" max-height="100" class="card-img-top" alt="Profile Picture">
+                    {% if post.author.profile.profile_pic %}
+                        <img class="rounded" style="object-fit: cover; width: 100%; max-height: 500px;" src="{{ post.author.profile.profile_pic.url }}" max-height="100" class="card-img-top" alt="Profile Picture">
+                    {% else %}
+                        <img class="rounded" src="{% static 'theblog/images/blank_profile_pic.jpg' %}" id="profile-picture" style="width: 100%; max-height: 500px;" class=" profile_pic mb-2 mx-auto" alt="Profile Picture">
+                    {% endif %}
+
                     <div class="card-body">
                         <h5 class="card-title">{{ post.author.username }}</h5>
                         <p class="card-text text-muted">{{post.author.profile.bio}}</p>

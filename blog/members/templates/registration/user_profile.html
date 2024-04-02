@@ -46,7 +46,7 @@
                                 <button type="button" class="btn rounded-3 btn-sm btn-outline-secondary">{{post.category}}</button>                        
                             </div>
                             <h6 class="card-subtitle mb-2 text-muted">by: <cite title="Source Title">{{post.author}} - {{ post.created_at }}</cite></h6>
-                            <p class="card-text">{{ post.body|truncatechars:100 }}</p>
+                            <p class="card-text mt-3">{{ post.body|striptags }}</p>
                             <a href="{% url 'post' post.pk %}" class="btn btn-primary card-link rounded-3">
                                 <i class="fa-regular fa-eye"></i>
                                 View Post

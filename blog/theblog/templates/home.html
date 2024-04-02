@@ -11,7 +11,7 @@
             <div class="mt-4 mb-4 me-4 ms-4">
                 {% for post in object_list %}
                 <a href="{% url 'post' post.pk %}" class="card-link post-user-name" style="text-decoration: none;">
-                    <div class="card mb-1 rounded-3 shadow">
+                    <div class="card mb-2 rounded-3 shadow">
                         <div class="d-flex card-header justify-content-between">
                             <div class="d-flex">
                                 {% if post.author.profile.profile_pic %}
@@ -37,7 +37,7 @@
                             {% endif %}
                         </div>
                         <div class="card-body">
-                            <p class="card-text text-center">{{ post.body|truncatechars:100|safe }}</p>
+                            <p class="card-text" style="font-size: 1.2rem;">{{ post.body|striptags }}</p>
                         </div>
                         <div class="ms-3 mt-2 mb-2 me-3 d-flex card-buttons justify-content-between">
                             <div class="view_comment">
