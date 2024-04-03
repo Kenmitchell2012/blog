@@ -46,7 +46,7 @@
                                 <button type="button" class="btn rounded-3 btn-sm btn-outline-secondary">{{post.category}}</button>                        
                             </div>
                             <h6 class="card-subtitle mb-2 text-muted">by: <cite title="Source Title">{{post.author}} - {{ post.created_at }}</cite></h6>
-                            <p class="card-text mt-3">{{ post.body|striptags }}</p>
+                            <p style="font-size: 1.2rem;" class="card-text mt-3">{{ post.body|striptags }}</p>
                             <a href="{% url 'post' post.pk %}" class="btn btn-primary card-link rounded-3">
                                 <i class="fa-regular fa-eye"></i>
                                 View Post
@@ -69,15 +69,15 @@
             
         
     </div>
-    <div class="">
-        <a class="mx-auto mt-4" href="{% url 'home' %}">
-            <button type="submit" class="btn btn-outline-dark rounded-3">
+    <div class="col-2">
+        <a class="mx-auto ms-4" href="{% url 'home' %}">
+            <button type="submit" class="btn btn-secondary rounded-3">
                 <i class="fa-solid fa-chevron-left"></i>
                 Back Home
             </button>
         </a>
 
-</div>
+    </div>
     
 </div>
 
