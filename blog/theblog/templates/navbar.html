@@ -9,33 +9,32 @@
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'home' %}">
                       <i class="fa-lg fa-solid fa-house"></i>
-                      Home
                   </a>
               </li>
               {% if user.is_authenticated %}
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'new_post' %}">
                       <i class="fa-solid fa-file-pen"></i>
-                      Add post
+                    
                   </a>
               </li>
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'add_category' %}">
                       <i class="fa-solid fa-list"></i>
-                      Add a Category
+                      
                   </a>
               </li>
               {% else %}
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'register' %}">
                       <i class="fa-lg fa-regular fa-clipboard"></i>
-                      Register
+                    
                   </a>
               </li>
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'login' %}">
                       <i class="fa-lg fa-solid fa-right-to-bracket"></i>
-                      Login
+                      
                   </a>
               </li>
               {% endif %}

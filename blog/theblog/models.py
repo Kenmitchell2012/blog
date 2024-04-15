@@ -34,6 +34,13 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return reverse('home')
 
+class Friend(models.Model):
+    user = models.ForeignKey(User, related_name='friends', on_delete=models.CASCADE)
+    friend = models.ForeignKey(User, related_name='user_friends', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.friend.username}"
+
 
 class Post(models.Model):
     title = models.CharField(max_length=100)

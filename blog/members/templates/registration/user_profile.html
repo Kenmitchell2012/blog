@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}{{post.title}} | Future Blogspot{% endblock %}
+{% block title %}{{profile.user.username}} | Future Blogspot{% endblock %}
 {% block body %}
 
 
@@ -37,8 +37,59 @@
 
                         <!-- show all posts from user -->
                 {% if posts %}
-                    {% for post in posts %}        
-                    <div class="card mt-2 mb-2 ms-2 me-2 rounded-3 shadow">
+                    {% for post in posts %}
+                    <a href="{% url 'post' post.pk %}" class="card-link post-user-name" style="text-decoration: none;">
+                        <div class="card mb-2 rounded-3 shadow">
+                            <div class="d-flex card-header justify-content-between">
+                                <div class="d-flex">
+                                    {% if post.author.profile.profile_pic %}
+                                        <img src="{{ post.author.profile.profile_pic.url }}" id="profile-picture" style="width: 50px; height: 50px;" class="rounded-circle profile-picture profile_pic mb-2" alt="Profile Picture">
+                                    {% else %}
+                                        <img src="{% static 'theblog/images/blank_profile_pic.jpg' %}" id="profile-picture" style="width: 50px; height: 50px;" class="rounded-circle profile-picture profile_pic mb-2" alt="Profile Picture">
+                                    {% endif %}
+                                    <h4 class="card-title mt-3 ms-1 me-1">{{ post.author.username }}</h4>
+                                    <h6 class="card-subtitle mt-3 mb-2 text-muted">{{ post.created_at|date:"m/d" }}</h6>
+                                </div>
+                                
+                                <div class="category">
+                                    <a href="{% url 'category' post.category|slugify %}">
+                                        <button type="button" class="mt-2 btn rounded-3 btn-sm btn-outline-secondary">{{post.category}}</button>
+                                    </a>  
+                                </div>
+                            </div>
+                            <div class="cardimg">
+                                {% if post.header_image %}
+                                    <div class="text-center">
+                                        <img style="object-fit: cover; width: 100%; max-height: 500px;" class="img-fluid mb-2 mt-2 rounded-3 shadow" src="{{ post.header_image.url }}" alt="">
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text" style="font-size: 1.2rem;">{{ post.body|striptags }}</p>
+                            </div>
+                            <div class="ms-3 mt-2 mb-2 me-3 d-flex card-buttons justify-content-between">
+                                <div class="view_comment">
+                                    <a href="{% url 'post' post.pk %}" class="card-link" style="text-decoration: none;">
+                                        <i class="fa fa-eye fa-lg" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                                <div class="make-comment">
+                                    <a href="{% url 'post' post.pk %}" class="card-link" style="text-decoration: none;">
+                                        <i class="fa fa-comment fa-lg" aria-hidden="true"></i>
+                                        {{ post.comments.count }}
+                                    </a>
+                                </div>
+                                <div class="likes">
+                                    <a href="{% url 'post' post.pk %}" class="card-link" style="text-decoration: none;">
+                                        <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
+                                        {{ post.likes.count }}
+    
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </a>        
+                    <!-- <div class="card mt-2 mb-2 ms-2 me-2 rounded-3 shadow">
                         
                         <div class="card-body">
                             <div class="justify-content-between d-flex">
@@ -56,7 +107,7 @@
                                 Delete Post
                             </a>
                         </div>
-                    </div>
+                    </div> -->
                     {% endfor %}
                     {% else %}
                     
