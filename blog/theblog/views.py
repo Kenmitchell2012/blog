@@ -119,6 +119,7 @@ class View_Post(DetailView):
             self.object = self.get_object()  # Get the post object
             new_comment = comment_form.save(commit=False)
             new_comment.post = self.object
+            new_comment.author = request.user
             new_comment.save()
             return redirect('post', self.kwargs['pk'])
         return self.get(request, *args, **kwargs)  # handle failed form validation
