@@ -15,7 +15,7 @@
                             {% endif %}
                             <h4 class="card-title mt-3 ms-1 me-1">{{ post.author.username }}</h4>
                             <h6 class="card-subtitle mt-4 mb-2 text-muted">{{ post.created_at }}</h6>
-                        </div>
+                       </div>
                         
                         <div class="category">
                             <a href="#">
@@ -67,10 +67,15 @@
                                 <div class="card mt-2 mb-2 ms-2 me-2 rounded-3 shadow">
                                     <div class="card-body">
                                         <div class="justify-content-between d-flex">
-                                            <h4 class="card-title">{{comment.name}}</h4>
-                                            <button type="button" class="btn rounded-3 btn-sm btn-outline-secondary">{{comment.author}}</button>                        
+                                            <h3 class="card-subtitle mb-2 text-muted"><cite title="Source Title">{{comment.author.username}}</cite></h3>
+                                            <!-- view commenter's profile -->
+                                            <a href="{% url 'show_profile_page' comment.author.profile.id %}" class="card-link" style="text-decoration: none;">
+                                                <button type="button" class="btn rounded-3 btn-sm btn-outline-secondary">View Profile</button>                        
+
+                                            </a>
                                         </div>
-                                        <h6 class="card-subtitle mb-2 text-muted">by: <cite title="Source Title">{{comment.author.username}} - {{ comment.date_added }}</cite></h6>
+                                        <h6 class="card-subtitle mb-2 text-muted">by: <cite title="Source Title">{{ comment.date_added }}</cite></h6>
+                                        div
                                         <p class="card-text" style="font-size: 1.2rem;">{{ comment.body }}</p>
                                     </div>
                                 </div>
