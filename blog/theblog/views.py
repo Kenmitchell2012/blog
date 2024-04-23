@@ -7,6 +7,8 @@ from .forms import PostForm, EditForm, CommentForm
 from django.contrib import messages
 
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 
@@ -141,6 +143,20 @@ class AddPost(CreateView):
     login_url = reverse_lazy('login')
     success_url = reverse_lazy('home')
     # fields = '__all__'
+    
+
+def new_post_from_profile(request):
+    if request.method == "POST":
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_post = form.save(commit=False)
+            new_post.author = request.user  # Set the author to the current user
+            new_post.save()
+            return redirect('profile_page_url_name')  # Redirect back to the profile page
+    else:
+        form = PostForm()
+    # If GET request or form is not valid, you might redirect or show the form again
+    return redirect('profile_page_url_name')
 
 class AddCommentView(CreateView):
     model = Comment
@@ -149,6 +165,20 @@ class AddCommentView(CreateView):
 
     success_url = reverse_lazy('home')
     fields = 'body'
+
+
+@login_required
+def DeleteCommentView(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    
+    # Check if the request user is the owner of the comment or an admin
+    if request.user == comment.author or request.user.is_superuser:
+        comment.delete()
+        # Redirect to the same page where the request came from
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('home')))
+    else:
+        # Optionally, return an error message or an HTTP forbidden response
+        return HttpResponseRedirect(reverse('error_view_name'))
 
 
 

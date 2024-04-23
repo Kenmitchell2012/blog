@@ -46,11 +46,31 @@
                             </a>
                         </div>
                         <div class="likes">
-                            <a href="{% url 'post' post.pk %}" class="card-link" style="text-decoration: none;">
-                                <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
-                                {{ post.likes.count }}
+                            <form action="{% url 'like_post' post.pk %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="post_id" value="{{ post.id }}">
+                                {% if user.is_authenticated %}
 
-                            </a>
+                                    {% if liked %}
+                                        <button type="submit" class="btn btn-link">
+                                            <i class="fa-lg fas fa-heart text-danger"></i>
+                                        </button>
+                                        
+                                    {% else %}
+                                        <button type="submit" class="btn btn-link">
+                                            <i class="fa-lg fas fa-heart text-primary"></i>
+                                        </button>
+                                    {% endif %}
+                                {% else %}
+                                    <a href="{% url 'login' %}">Login </a>to like |
+                                    
+                                {% endif %}
+                                {{ post.likes.count }}
+                            </form>
+                            <!-- <a href="{% url 'post' post.pk %}" class="card-link" style="text-decoration: none;">
+                                <i class="fa fa-heart fa-lg" aria-hidden="true"></i> 
+                                </a> -->
+                            
                         </div>
                     </div>
                 </div>
@@ -75,9 +95,19 @@
                                             </a>
                                         </div>
                                         <h6 class="card-subtitle mb-2 text-muted">by: <cite title="Source Title">{{ comment.date_added }}</cite></h6>
-                                        div
-                                        <p class="card-text" style="font-size: 1.2rem;">{{ comment.body }}</p>
+                                    
+                                        <div class="d-flex justify-content-between">
+                                            <p class="card-text" style="font-size: 1.2rem;">{{ comment.body }}</p>
+
+                                            {% if user.id == comment.author.id %}
+                                                <a href="{% url 'delete_comment' comment.pk %}" class="card-link rounded-3 mb-2">
+                                                    <i style="color: red;" class="fa-regular fa-lg fa-trash-can red-icon"></i>
+                                                </a>
+                                            {% endif %}
+                                        </div>
                                     </div>
+                                
+                            
                                 </div>
                             {% endfor %}
                         {% endif %}

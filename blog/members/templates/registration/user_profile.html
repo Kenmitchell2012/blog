@@ -21,6 +21,30 @@
                         <p class="card-text text-muted">Bio: {{profile.user.profile.bio}}</p>
                     </div>
                 </div>
+                <!-- create a post from profile page -->
+                <div class="card mt-4 rounded-3 shadow-sm">
+                    <div class="card-body">
+                        {% if user.is_authenticated %}
+                            <form method="post" action="{% url 'new_post_from_profile' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ form.media }}
+                                {{ post_form.as_p }}
+                                
+                                <button type="submit" class="btn btn-primary rounded-3">Submit</button>
+                          </form>    
+                            <!-- <div id="comment-form" data-post-id="{{ post.id }}">
+                                <div class="form-group">
+                                    <textarea class="form-control" id="comment-textarea" rows="4"></textarea>
+                                </div>
+                                <button type="button" class="btn btn-primary" id="submit-comment">Add Comment</button>
+                            </div> -->
+                        {% else %}
+                        <a class="comment-button" href="{% url 'login' %}">
+                            <i class="fas fa-sign-in-alt"></i> Login to Comment
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
             <div class="col-md-8 mt-4 mx-auto">
                 <div class="d-flex justify-content-between">

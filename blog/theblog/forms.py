@@ -49,3 +49,14 @@ class CommentForm(forms.ModelForm):
             'body': forms.Textarea(attrs={'class': 'form-control'}),
 
         }
+
+# add post from profile page postform
+class AddPostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ('body',)
+        
+        widgets = {
+            'body': forms.Textarea(attrs={'class': 'form-control'}),
+
+        }
