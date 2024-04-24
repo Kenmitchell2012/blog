@@ -52,12 +52,25 @@
                                 </a>
                             </div>
                             <div class="likes">
-                                <a href="{% url 'post' post.pk %}" class="card-link" style="text-decoration: none;">
-                                    <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
-                                    {{ post.likes.count }}
-
-                                </a>
+                                <form action="{% url 'like_post' post.pk %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="post_id" value="{{ post.id }}">
+                            
+                                    {% if user.is_authenticated %}
+                                        <button type="submit" class="like-button">
+                                            {% if liked %}
+                                                <i class="fa-lg fas fa-heart text-danger"></i>
+                                            {% else %}
+                                                <i class="fa-lg fas fa-heart text-primary"></i>
+                                            {% endif %}
+                                            <span class="like-count">{{ post.likes.count }}</span>
+                                        </button>
+                                    {% else %}
+                                        <a href="{% url 'login' %}" class="login-link">Login</a> to like
+                                    {% endif %}
+                                </form>
                             </div>
+                            
                         </div>
                         
                         <!-- <div class="card-body">

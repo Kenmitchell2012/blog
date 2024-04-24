@@ -37,3 +37,28 @@
 .red-icon {
     color: red;
 }
+
+.likes {
+    text-align: center; /* Centering the content */
+}
+
+.like-button {
+    background: none; /* Removes button default background */
+    border: none; /* Removes button default border */
+    cursor: pointer; /* Changes cursor to pointer to indicate it's clickable */
+    display: flex; /* Enables flexbox layout */
+    align-items: center; /* Aligns children vertically in the center */
+    justify-content: center; /* Centers children horizontally */
+    padding: 5px; /* Adds some padding inside the button */
+    color: inherit; /* Inherits color from parent */
+}
+
+.like-button .like-count {
+    margin-left: 10px; /* Adds space between the icon and the number */
+}
+
+.login-link {
+    text-decoration: none; /* Removes underline from the link */
+    color: blue; /* Sets color to blue, or any other color you prefer */
+    margin-left: 4px; /* Optional: Adds space between "Login" and "to like" */
+}
