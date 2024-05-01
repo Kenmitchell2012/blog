@@ -12,22 +12,22 @@
           <ul class="navbar-nav mb-2 mb-lg-0">
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'home' %}">
-                      <i class="fa-lg fa-solid fa-house"></i>
+                      <i class="fa-lg fa-solid fa-house">Home</i>
                   </a>
               </li>
               {% if user.is_authenticated %}
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'new_post' %}">
-                      <i class="fa-solid fa-file-pen"></i>
+                      <i class="fa-solid fa-file-pen">New Post</i>
                     
                   </a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                   <a class="nav-link" href="{% url 'add_category' %}">
-                      <i class="fa-solid fa-list"></i>
+                      <i class="fa-solid fa-list">New Post</i>
                       
                   </a>
-              </li>
+              </li> -->
               {% else %}
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'register' %}">
@@ -43,7 +43,7 @@
               </li>
               {% endif %}
               <!-- categories -->
-              <li class="nav-item dropdown">
+              <!-- <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Categories</a>
                   <div class="dropdown-menu">
                       {% for item in cat_menu %}
@@ -51,14 +51,13 @@
                       {% endfor %}
                       <a class="nav-link" href="{% url 'category_list' %}">Category List</a>
                   </div>
-              </li>
+              </li> -->
               <!-- end categories -->
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                   <a class="nav-link" href="#">
-                      <i class="fa-lg fa-regular fa-address-card"></i>
-                      About
+                      <i class="fa-lg fa-regular fa-address-card">About</i>
                   </a>
-              </li>
+              </li> -->
               {% if user.is_authenticated %}
               <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Profile</a>
@@ -98,11 +97,7 @@
                     <a class="nav-link" href="{% url 'show_profile_page' user.profile.id %}">
                         <i class="fa-lg fa-regular fa-address-card"></i>
                     </a>
-                    <div class="ml-auto">
-                        <a class="nav-link" href="{% url 'show_profile_page' user.profile.id %}">
-                            Hi, {{ user.username }}
-                        </a>
-                    </div>
+                    <p>Hi, {{ user.username }}</p>
                 </div>
             </li>
             

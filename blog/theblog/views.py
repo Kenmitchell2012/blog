@@ -221,4 +221,24 @@ class DeletePost(DeleteView):
         return context
 
     
-# add friend
+
+from django.http import JsonResponse
+
+def like_post(request, post_id):
+    if request.method == 'POST' and request.user.is_authenticated:
+        post = Post.objects.get(pk=post_id)
+        user = request.user
+        if post.likes.filter(id=user.id).exists():
+            post.likes.remove(user)
+            liked = False
+        else:
+            post.likes.add(user)
+            liked = True
+        response = {
+            'new_like_count': post.likes.count(),
+            'liked': liked,
+        }
+        return JsonResponse(response)
+    return JsonResponse({'error': 'Something went wrong'}, status=400)
+
+

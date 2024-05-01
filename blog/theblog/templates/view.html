@@ -117,7 +117,7 @@
                             <form method="post" action="{% url 'post' pk=post.pk %}">
                                 {% csrf_token %}
                                 {{ comment_form.as_p }}
-                                <button type="submit">Post Comment</button>
+                                <button class="btn btn-primary rounded-3" type="submit">Post Comment</button>
                             </form>    
                             <!-- <div id="comment-form" data-post-id="{{ post.id }}">
                                 <div class="form-group">
