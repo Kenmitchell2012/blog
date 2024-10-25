@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}{{post.title}} | Future Blogspot{% endblock %}
+{% block title %}{{profile.user.username}} | Future Blogspot{% endblock %}
 {% block body %}
 
 
@@ -21,6 +21,30 @@
                         <p class="card-text text-muted">Bio: {{profile.user.profile.bio}}</p>
                     </div>
                 </div>
+                <!-- create a post from profile page -->
+                <div class="card mt-4 rounded-3 shadow-sm">
+                    <div class="card-body">
+                        {% if user.is_authenticated %}
+                            <form method="post" action="{% url 'new_post_from_profile' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ form.media }}
+                                {{ post_form.as_p }}
+                                
+                                <button type="submit" class="btn btn-primary rounded-3">Submit</button>
+                          </form>    
+                            <!-- <div id="comment-form" data-post-id="{{ post.id }}">
+                                <div class="form-group">
+                                    <textarea class="form-control" id="comment-textarea" rows="4"></textarea>
+                                </div>
+                                <button type="button" class="btn btn-primary" id="submit-comment">Add Comment</button>
+                            </div> -->
+                        {% else %}
+                        <a class="comment-button" href="{% url 'login' %}">
+                            <i class="fas fa-sign-in-alt"></i> Login to Comment
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
             <div class="col-md-8 mt-4 mx-auto">
                 <div class="d-flex justify-content-between">
@@ -37,8 +61,59 @@
 
                         <!-- show all posts from user -->
                 {% if posts %}
-                    {% for post in posts %}        
-                    <div class="card mt-2 mb-2 ms-2 me-2 rounded-3 shadow">
+                    {% for post in posts %}
+                    <a href="{% url 'post' post.pk %}" class="card-link post-user-name" style="text-decoration: none;">
+                        <div class="card mb-2 rounded-3 shadow">
+                            <div class="d-flex card-header justify-content-between">
+                                <div class="d-flex">
+                                    {% if post.author.profile.profile_pic %}
+                                        <img src="{{ post.author.profile.profile_pic.url }}" id="profile-picture" style="width: 50px; height: 50px;" class="rounded-circle profile-picture profile_pic mb-2" alt="Profile Picture">
+                                    {% else %}
+                                        <img src="{% static 'theblog/images/blank_profile_pic.jpg' %}" id="profile-picture" style="width: 50px; height: 50px;" class="rounded-circle profile-picture profile_pic mb-2" alt="Profile Picture">
+                                    {% endif %}
+                                    <h4 class="card-title mt-3 ms-1 me-1">{{ post.author.username }}</h4>
+                                    <h6 class="card-subtitle mt-3 mb-2 text-muted">{{ post.created_at|date:"m/d" }}</h6>
+                                </div>
+                                
+                                <div class="category">
+                                    <a href="{% url 'category' post.category|slugify %}">
+                                        <button type="button" class="mt-2 btn rounded-3 btn-sm btn-outline-secondary">{{post.category}}</button>
+                                    </a>  
+                                </div>
+                            </div>
+                            <div class="cardimg">
+                                {% if post.header_image %}
+                                    <div class="text-center">
+                                        <img style="object-fit: cover; width: 100%; max-height: 500px;" class="img-fluid mb-2 mt-2 rounded-3 shadow" src="{{ post.header_image.url }}" alt="">
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text" style="font-size: 1.2rem;">{{ post.body|striptags }}</p>
+                            </div>
+                            <div class="ms-3 mt-2 mb-2 me-3 d-flex card-buttons justify-content-between">
+                                <div class="view_comment">
+                                    <a href="{% url 'post' post.pk %}" class="card-link" style="text-decoration: none;">
+                                        <i class="fa fa-eye fa-lg" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                                <div class="make-comment">
+                                    <a href="{% url 'post' post.pk %}" class="card-link" style="text-decoration: none;">
+                                        <i class="fa fa-comment fa-lg" aria-hidden="true"></i>
+                                        {{ post.comments.count }}
+                                    </a>
+                                </div>
+                                <div class="likes">
+                                    <a href="{% url 'post' post.pk %}" class="card-link" style="text-decoration: none;">
+                                        <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
+                                        {{ post.likes.count }}
+    
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </a>        
+                    <!-- <div class="card mt-2 mb-2 ms-2 me-2 rounded-3 shadow">
                         
                         <div class="card-body">
                             <div class="justify-content-between d-flex">
@@ -46,7 +121,7 @@
                                 <button type="button" class="btn rounded-3 btn-sm btn-outline-secondary">{{post.category}}</button>                        
                             </div>
                             <h6 class="card-subtitle mb-2 text-muted">by: <cite title="Source Title">{{post.author}} - {{ post.created_at }}</cite></h6>
-                            <p class="card-text">{{ post.body|truncatechars:100 }}</p>
+                            <p style="font-size: 1.2rem;" class="card-text mt-3">{{ post.body|striptags }}</p>
                             <a href="{% url 'post' post.pk %}" class="btn btn-primary card-link rounded-3">
                                 <i class="fa-regular fa-eye"></i>
                                 View Post
@@ -56,7 +131,7 @@
                                 Delete Post
                             </a>
                         </div>
-                    </div>
+                    </div> -->
                     {% endfor %}
                     {% else %}
                     
@@ -69,15 +144,15 @@
             
         
     </div>
-    <div class="">
-        <a class="mx-auto mt-4" href="{% url 'home' %}">
-            <button type="submit" class="btn btn-outline-dark rounded-3">
+    <div class="col-2">
+        <a class="mx-auto ms-4" href="{% url 'home' %}">
+            <button type="submit" class="btn btn-secondary rounded-3">
                 <i class="fa-solid fa-chevron-left"></i>
                 Back Home
             </button>
         </a>
 
-</div>
+    </div>
     
 </div>
 

@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from ckeditor.fields import RichTextField
-
+from django.conf import settings
 # Create your models here.
 
 class Category(models.Model):
@@ -34,6 +34,13 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return reverse('home')
 
+class Friend(models.Model):
+    user = models.ForeignKey(User, related_name='friends', on_delete=models.CASCADE)
+    friend = models.ForeignKey(User, related_name='user_friends', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.friend.username}"
+
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
@@ -57,9 +64,9 @@ class Post(models.Model):
     
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
     body = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return '%s - %s' % (self.post.title, self.name)
+        return f'{self.post.title} by {self.author.username}'
