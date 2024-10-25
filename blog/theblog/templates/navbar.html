@@ -1,110 +1,57 @@
 <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand mt-2 mb-lg-0 mb-2" href="{% url 'home' %}">
-        <i class="fa-lg fa-solid fa-blog"></i>
-         Future Blogspot
+      <i class="fa-lg fa-solid fa-blog"></i>
+      Future Blogspot
     </a>
     <div class="col-6 mx-auto">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      <div class="mxcollapse navbar-collapse" id="navbarColor02">
-          <ul class="navbar-nav mb-2 mb-lg-0">
-              <li class="nav-item">
-                  <a class="nav-link" href="{% url 'home' %}">
-                      <i class="fa-lg fa-solid fa-house">Home</i>
-                  </a>
-              </li>
-              {% if user.is_authenticated %}
-              <li class="nav-item">
-                  <a class="nav-link" href="{% url 'new_post' %}">
-                      <i class="fa-solid fa-file-pen">New Post</i>
-                    
-                  </a>
-              </li>
-              <!-- <li class="nav-item">
-                  <a class="nav-link" href="{% url 'add_category' %}">
-                      <i class="fa-solid fa-list">New Post</i>
-                      
-                  </a>
-              </li> -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'new_post' %}">New Post</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+          {% endif %}
+          {% if user.is_authenticated %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Profile</a>
+            <div class="dropdown-menu">
+              {% if user.profile.id %}
+              <a class="nav-link" href="{% url 'show_profile_page' user.profile.id %}">View My Profile</a>
+              <a class="nav-link" href="{% url 'edit_profile_page' user.profile.id %}">Edit Profile</a>
               {% else %}
-              <li class="nav-item">
-                  <a class="nav-link" href="{% url 'register' %}">
-                      <i class="fa-lg fa-regular fa-clipboard"></i>
-                    
-                  </a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="{% url 'login' %}">
-                      <i class="fa-lg fa-solid fa-right-to-bracket"></i>
-                      
-                  </a>
-              </li>
+              <a class="nav-link" href="{% url 'create_profile_page' %}">Create Profile Page</a>
               {% endif %}
-              <!-- categories -->
-              <!-- <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Categories</a>
-                  <div class="dropdown-menu">
-                      {% for item in cat_menu %}
-                      <a class="dropdown-item" href="{% url 'category' item|slugify  %}">{{ item }}</a>
-                      {% endfor %}
-                      <a class="nav-link" href="{% url 'category_list' %}">Category List</a>
-                  </div>
-              </li> -->
-              <!-- end categories -->
-              <!-- <li class="nav-item">
-                  <a class="nav-link" href="#">
-                      <i class="fa-lg fa-regular fa-address-card">About</i>
-                  </a>
-              </li> -->
-              {% if user.is_authenticated %}
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Profile</a>
-                  <div class="dropdown-menu">
-                      {% if user.profile.id %}
-                      <a class="nav-link" href="{% url 'show_profile_page' user.profile.id %}">
-                          <i class="fa-solid fa-user"></i>
-                          View My Profile
-                      </a>
-                      <a class="nav-link" href="{% url 'edit_profile_page' user.profile.id %}">
-                          <i class="fa-solid fa-user"></i>
-                          Edit Profile
-                      </a>
-                      {% else %}
-                      <a class="nav-link" href="{% url 'create_profile_page'  %}">
-                          <i class="fa-solid fa-user"></i>
-                          Create Profile Page
-                      </a>
-                      {% endif %}
-                      <a class="nav-link" href="{% url 'edit_profile' %}">
-                          <i class="fa-solid fa-user"></i>
-                          Edit Settings
-                      </a>
-                  </div>
-              </li>
-              <li class="nav-item">
-                  <form method="post" action="{% url 'logout' %}">
-                      {% csrf_token %}
-                      <button type="submit" class="btn btn-link nav-link custom-red">
-                          <i class="fa-solid fa-right-from-bracket"></i>
-                          Logout
-                      </button>
-                  </form>
-              </li>
-              <li class="nav-item">
-                <div class="d-flex ml-auto">
-                    <a class="nav-link" href="{% url 'show_profile_page' user.profile.id %}">
-                        <i class="fa-lg fa-regular fa-address-card"></i>
-                    </a>
-                    <p>Hi, {{ user.username }}</p>
-                </div>
-            </li>
-            
-              {% endif %}
-          </ul>
+              <a class="nav-link" href="{% url 'edit_profile' %}">Edit Settings</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <form method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-link nav-link custom-red">Logout</button>
+            </form>
+          </li>
+          <li class="nav-item">
+            <div class="d-flex align-items-center">
+              <p class="mb-0">Hi, {{ user.username }}</p>
+            </div>
+          </li>
+          {% endif %}
+        </ul>
       </div>
     </div>
-      
   </div>
 </nav>

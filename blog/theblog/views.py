@@ -28,28 +28,6 @@ def LikeView(request, pk):
         liked = True
     return HttpResponseRedirect(reverse('post', args=[str(pk)]))
 
-
-
-
-# class HomeView(ListView):
-#     model = Post
-
-#     template_name = 'home.html'
-#     cats = Category.objects.all()
-
-#     def get_context_data(self, *args, **kwargs):
-#         cat_menu = Category.objects.all()
-#         context = super(HomeView, self).get_context_data(*args, **kwargs)
-
-#         context["cat_menu"] = cat_menu
-#         return context
-    
-#     def get_queryset(self):
-#         return Post.objects.all().order_by('-created_at')
-
-from django.views.generic import ListView
-from .models import Post, Category
-
 class HomeView(ListView):
     model = Post
     template_name = 'home.html'
@@ -73,7 +51,6 @@ class HomeView(ListView):
 
     def get_queryset(self):
         return Post.objects.all().order_by('-created_at')
-
     
 def CategoryView(request, cats):
     category_posts = Post.objects.filter(category=cats.replace('-', ' '))
@@ -125,15 +102,6 @@ class View_Post(DetailView):
             new_comment.save()
             return redirect('post', self.kwargs['pk'])
         return self.get(request, *args, **kwargs)  # handle failed form validation
-
-
-
-
-    # def get_context_data(self, *args, **kwargs):
-    #     stuff = get_object_or_404(Post, id=self.kwargs['pk'])
-    #     total_likes = stuff.total_likes()
-    #     context["total_likes"] = total_likes
-    #     return context
 
 
 class AddPost(CreateView):
